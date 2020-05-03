@@ -31,7 +31,7 @@ _Prediction is insufficient for choosing interventions._
 
 ## What is causality?
 
-![hierarchy](images/hierarchy.png)
+![hierarchy](images/1_introduction/hierarchy.png)
 
 **Practical definition of causality:** `T` causes `Y` iff changing `T` leads to a change in `Y`, keeping everything else constant.
 
@@ -48,7 +48,7 @@ Reason about a world that does not exist.
 
 Causal inference is the problem of estimating the counterfactual.
 
-![counterfactual](images/counterfactual.png)
+![counterfactual](images/1_introduction/counterfactual.png)
 
 Causal effect
 
@@ -94,15 +94,15 @@ is a framework for expressing complex causal relationships
 Edges represent _direct_ causes.
 Directed paths represent _indirect_ causes.
 
-![structure](images/structure.png)
+![structure](images/1_introduction/structure.png)
 
-![markov](images/markov.png)
+![markov](images/1_introduction/markov.png)
 
-![cf1](images/cf1.png)
+![cf1](images/1_introduction/cf1.png)
 
-![cf2](images/cf2.png)
+![cf2](images/1_introduction/cf2.png)
 
-![cf3](images/cf3.png)
+![cf3](images/1_introduction/cf3.png)
 
 Assumptions are edges that are _missing_
 
@@ -138,15 +138,15 @@ Other benefit is that it provides a mechanistic way of identifying causal effect
 
 Three types of node-edges:
 
-![node_types](images/node_types.png)
+![node_types](images/1_introduction/node_types.png)
 
 A backdoor path is any undirected path that starts on `->T` and ends on `->Y`.
 
 **Backdoor criterion:** If conditioning on `X` blocks all back-door paths, then:
 
-![backdoor_criterion](images/backdoor_criterion.png)
+![backdoor_criterion](images/1_introduction/backdoor_criterion.png)
 
-![apply backdoor](images/apply_backdoor.png)
+![apply backdoor](images/1_introduction/apply_backdoor.png)
 
 Both frameworks have pros:
 

@@ -1,5 +1,20 @@
 # 3 Considerations for Large-scale and Network Data
 
+## Table of contents
+
+- [3 Considerations for Large-scale and Network Data](#3-considerations-for-large-scale-and-network-data)
+  - [Table of contents](#table-of-contents)
+  - [High-dimensional data](#high-dimensional-data)
+    - [Example: regularized propensity score](#example-regularized-propensity-score)
+  - [Network effects](#network-effects)
+    - [Example: identifying peer effects while observational studies is impossible](#example-identifying-peer-effects-while-observational-studies-is-impossible)
+    - [Example: use aggregated sub-network](#example-use-aggregated-sub-network)
+  - [Data about people](#data-about-people)
+    - [Demographic bias](#demographic-bias)
+    - [Usage bias](#usage-bias)
+    - [Activity bias](#activity-bias)
+    - [Preference bias](#preference-bias)
+
 ## High-dimensional data
 
 High dimensional data creates estimation problems.
@@ -50,7 +65,7 @@ Now their friend's outcome may also change.
 
 Breaks the SUTVA assumption.
 Consider partitioned sub-networks as a unit of analysis.
-Design alternative randomization  assignment of estimator.
+Design alternative randomization assignment of estimator.
 
 ### Example: identifying peer effects while observational studies is impossible
 

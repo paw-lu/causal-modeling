@@ -1,5 +1,59 @@
 # 2 Methods for Causal Inference
 
+## Table of contents
+
+- [2 Methods for Causal Inference](#2-methods-for-causal-inference)
+  - [Table of contents](#table-of-contents)
+  - [Review](#review)
+  - [Observational studies](#observational-studies)
+    - [Conditioning on key variables](#conditioning-on-key-variables)
+      - [Example](#example)
+      - [Assumptions](#assumptions)
+        - [Ignorability](#ignorability)
+        - [Stable unit treatment value](#stable-unit-treatment-value)
+        - [Common support](#common-support)
+      - [Simple conditioning – summary](#simple-conditioning--summary)
+        - [Definition](#definition)
+        - [Intuition](#intuition)
+        - [Example](#example-1)
+        - [Keep in mind](#keep-in-mind)
+    - [Matching and stratification](#matching-and-stratification)
+      - [Propensity score](#propensity-score)
+      - [Matching — Summary](#matching--summary)
+        - [Definition](#definition-1)
+        - [Intuition](#intuition-1)
+        - [Example](#example-2)
+        - [Keep in mind](#keep-in-mind-1)
+      - [Stratification](#stratification)
+      - [Stratification — summary](#stratification--summary)
+        - [Definition](#definition-2)
+        - [Intuition](#intuition-2)
+        - [Example](#example-3)
+        - [Keep in mind](#keep-in-mind-2)
+    - [Weighting](#weighting)
+        - [Weighting – summary](#weighting--summary)
+          - [Definition](#definition-3)
+        - [Intuition](#intuition-3)
+        - [Keep in mind](#keep-in-mind-3)
+    - [Simple regression](#simple-regression)
+      - [Warnings](#warnings)
+      - [Regression – Summary](#regression--summary)
+        - [Definition](#definition-4)
+        - [Example](#example-4)
+        - [Keep in mind](#keep-in-mind-4)
+    - [Doubly robust](#doubly-robust)
+      - [Caveat](#caveat)
+      - [Doubly robust – summary](#doubly-robust--summary)
+        - [Intuition](#intuition-4)
+        - [Keep in mind](#keep-in-mind-5)
+    - [Synthetic controls](#synthetic-controls)
+      - [Example](#example-5)
+      - [Synthetic controls — summary](#synthetic-controls--summary)
+        - [Definition](#definition-5)
+        - [Intuition](#intuition-5)
+        - [Example](#example-6)
+        - [Keep in mind](#keep-in-mind-6)
+
 ## Review
 
 Goal is to estimate the effect of a **treatment** `T` on **outcome** `Y`.
@@ -387,16 +441,16 @@ Can build **synthetic controls** that estimate what `Y_T=0` would have been for 
 
 1. Decide what treatment will be
 2. **Pre-treatment** (observe the world for a bit)
-    - Record the outcome we care about
-    - Record covariates that can help us predict our observed outcome,
-    but will not be effected by the treatment.
-    Use domain-knowledge and theory to identify.
-    - Model that predicts outcome based on covariates
+   - Record the outcome we care about
+   - Record covariates that can help us predict our observed outcome,
+     but will not be effected by the treatment.
+     Use domain-knowledge and theory to identify.
+   - Model that predicts outcome based on covariates
 3. **Post treatment**
-    - Keep recording outcome.
-    This is now treated outcome
-    - Predict untreated outcome using learned model and current covariates
-    - ATE = difference between observed outcome and prediction of untreated outcome
+   - Keep recording outcome.
+     This is now treated outcome
+   - Predict untreated outcome using learned model and current covariates
+   - ATE = difference between observed outcome and prediction of untreated outcome
 
 #### Example
 

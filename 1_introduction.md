@@ -1,5 +1,18 @@
 # Introduction to counterfactual reasoning
 
+## Table of contents
+
+- [Introduction to counterfactual reasoning](#introduction-to-counterfactual-reasoning)
+  - [Table of contents](#table-of-contents)
+  - [Intro](#intro)
+  - [What is causality?](#what-is-causality)
+  - [Potential outcomes framework](#potential-outcomes-framework)
+    - [Recap](#recap)
+  - [Unobserved confounds / Simpson's Paradox](#unobserved-confounds--simpsons-paradox)
+  - [Structural causal model framework](#structural-causal-model-framework)
+    - [Recap](#recap-1)
+  - [Conclusion](#conclusion)
+
 ## Intro
 
 **Do prediction models guide decision-making?**

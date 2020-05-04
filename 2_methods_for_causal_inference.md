@@ -53,6 +53,40 @@
         - [Intuition](#intuition-5)
         - [Example](#example-6)
         - [Keep in mind](#keep-in-mind-6)
+  - [Natural experiments](#natural-experiments)
+    - [Simple natural experiment](#simple-natural-experiment)
+      - [Example](#example-7)
+      - [Simple natural experiment – summary](#simple-natural-experiment--summary)
+        - [Definition](#definition-6)
+        - [Intuition](#intuition-6)
+        - [Example](#example-8)
+        - [Keep in mind](#keep-in-mind-7)
+    - [Instrumental variables](#instrumental-variables)
+      - [Example](#example-9)
+      - [Instrumental variables — summary](#instrumental-variables--summary)
+        - [Definition](#definition-7)
+        - [Intuition](#intuition-7)
+        - [Examples](#examples)
+        - [Keep in mind](#keep-in-mind-8)
+    - [Regression discontinuities](#regression-discontinuities)
+      - [Example](#example-10)
+      - [Regression discontinuities — summary](#regression-discontinuities--summary)
+        - [Definition](#definition-8)
+        - [Intuition](#intuition-8)
+        - [Example](#example-11)
+        - [Keep in mind](#keep-in-mind-9)
+    - [Refutations](#refutations)
+      - [Step 1: Making explicit the difference between identification and estimation](#step-1-making-explicit-the-difference-between-identification-and-estimation)
+      - [Step 2: Explicity representing your identifying and estimating assumptions](#step-2-explicity-representing-your-identifying-and-estimating-assumptions)
+      - [Step 3: refute your assumptions, and analyze your estimate's sensitivity to violations](#step-3-refute-your-assumptions-and-analyze-your-estimates-sensitivity-to-violations)
+      - [DoWhy](#dowhy)
+      - [Refutation checks](#refutation-checks)
+        - [Add random variables to your model](#add-random-variables-to-your-model)
+        - [Replace treatment by a placebo (A/A test)](#replace-treatment-by-a-placebo-aa-test)
+        - [Divide data into subsets (cross-validation)](#divide-data-into-subsets-cross-validation)
+        - [Test balance of covariates](#test-balance-of-covariates)
+        - [Refutation not possible](#refutation-not-possible)
+      - [Example](#example-12)
 
 ## Review
 
@@ -481,3 +515,348 @@ on population-wide cholesterol
 
 Ignorability assumption must still hold.
 Must be concerned about generalizability/robustness of learned outcome model.
+
+## Natural experiments
+
+### Simple natural experiment
+
+**What can we do without ignorability?**
+
+Instead of assuming ignorability over the entire dataset,
+find subset that approximate an experiment
+
+"Natural", "as if Nature had conducted an experiment for you"
+
+Common sources are:
+
+- Prior A/B test
+- Lottery
+- Any randomized policy
+- External shock to the treatment
+
+Allows common causes of `T` and `Y` as long as the source is not affected by them.
+
+#### Example
+
+London had a cholera outbreak.
+Higher cholera deaths near a water pump,
+but could be correlational
+
+Two major water companies for London—
+one upstream,
+one downstream.
+Customers of each company were distributed throughout the city
+
+No difference in neighborhood,
+but 8-fold increase in cholera with downstream company
+
+Exploit naturally occurring **as-if random** variation in the data
+
+Since data is not actively randomized,
+as-if random is an assumption
+
+Also needs **exclusion**.
+Source of variation should not affect outcome directly,
+only treatment
+
+#### Simple natural experiment – summary
+
+##### Definition
+
+Exploit as-if random assignments to treatments to measure the outcome
+
+##### Intuition
+
+When assignments of treatment is unrelated to the measured outcome and their common causes,
+we can treat it as if it is a randomized experiment
+to estimate treatment effect
+
+##### Example
+
+What water company do you buy from?
+
+##### Keep in mind
+
+As-if random assignment of treatments are hard to find.
+Estimates sensitive to violation of exclusion assumption.
+
+### Instrumental variables
+
+Prior setup can be generalized as search for an **instrumental variable**.
+
+![Instrumental variable example](/images/2_methods_for_causal_inference/instrumental_var_example.png)
+
+![Instrumental variable graph](images/2_methods_for_causal_inference/instrumental_var_graph.png)
+
+Can use this variation to compute causal effect.
+
+An increase in `Z` can lead to a change in `Y` only through `X`.
+
+So change in `Y` is a product change in `Z -> X` and `X -> Y`
+
+Compare the extent by which random assignment affects `X` vs `Y`.
+
+![Causal effect formula](images/2_methods_for_causal_inference/causal_effect_formula.png)
+
+Can look at as-if random variation due to external events.
+
+Like encouraging randomly selected users of an app to exercise.
+Or looking at past A/B test intervention that increased chance of exercise.
+
+#### Example
+
+**What is the effect of recommendations on an app store?**
+
+**Instrumental variable**:
+External sources that drive sudden, large traffic to an app
+
+How many new visits are _caused_ by the recommender system?
+
+![App store recommendations graph](images/2_methods_for_causal_inference/store_recommend_graph.png)
+
+Demand for `App 1` is correlated with demand for `App 2`.
+Users likely visit `App 2` even without recommendation
+
+Traffic on normal days to `App 1`.
+
+![Normal App 1 traffic](images/2_methods_for_causal_inference/normal_traffic.png)
+
+External shock brings as-if random users to `App 1`.
+
+![External shock to App 1 traffic](images/2_methods_for_causal_inference/external_shock.png)
+
+Exploiting sudden variation in traffic to App 1
+
+To compute casual CTR of visits to `App 1` on visits to `App 2`.
+
+Compare observed effect of external event separately on visits to `App 1`
+
+![Causal CTR](images/2_methods_for_causal_inference/causal_ctr.png)
+
+Automatically identifying natural experiments.
+User split-door criterion.
+
+- Lottery
+- Weather
+- Shocks
+- Discontinuities
+- Hard-to-find variations
+
+There are a lot of natural variations:
+
+- Change in access of digital services
+- Change in train stops in a city
+- Change in medicines at a hospital
+
+#### Instrumental variables — summary
+
+##### Definition
+
+Instrumental variables introduce as-if random noise into treatment assignment,
+and are used to estimate treatment effect
+
+##### Intuition
+
+Because instrumental variables are not influenced by confounds,
+their indirect effect on outcome `Y` is independent of confounds as well.
+Because instrumental variables do not directly influence outcome,
+their effect must be due to the effect of the treatment
+
+##### Examples
+
+Encouraging people to exercise at random.
+Sudden increase in page visits to a product.
+
+##### Keep in mind
+
+Causal estimate may not generalize to full population.
+Estimate very sensitive to the violations of instrumental variables assumption.
+
+### Regression discontinuities
+
+Look for arbitrary changes to treatment
+
+Instead of an instrumental variable changing the distribution of treatment over individuals,
+an arbitrary change decides the treatment deterministically
+
+![Discontinuity example](images/2_methods_for_causal_inference/discontinuity_example.png)
+
+Can also be threshold.
+For example,
+beneath threshold `t`
+people get free health insurance.
+What is the effect of health insurance on cholesterol?
+
+People with health insurance are very different to those without.
+But within `[t - 1, t + 1]` they are similar.
+
+Regression discontinuities also depend on as-if-random and exclusion:
+
+- **As-if-random** People near the threshold are similar to each other,
+  as if nature randomized them on either side of the threshold
+- **Exclusion** Merley being on one side of the threshold does not affect the outcome.
+- **Very common** Many decision in organizations,
+  arbitrary decisions in software are examples
+
+#### Example
+
+Effect of store recommendations. Suppose instead of comparing recommendation algorithms,
+we want to estimate the causal effect of showing _any_ algorithmic recommendation.
+
+Can be used to benchmark how much revenue a recommendation system brings.
+
+Explore arbitrary cutoffs to recommendations.
+Only three recommendations shown to user.
+
+Assume that closely ranked not shown app
+(recommendation number 4)
+are as relevant as shown apps
+
+![Recommendation graph](images/2_methods_for_causal_inference/store_recommend_graph.png)
+
+For any top-`k` recommendation list,
+using logs,
+identify apps that were similarly ranked
+but could not make it to the top-k shown apps.
+Measure difference in app installs
+between shown and not-shown apps for each user.
+
+#### Regression discontinuities — summary
+
+##### Definition
+
+Regression discontinuities identify arbitrary boundaries
+between treated and untreated populations.
+Measure treatment effect as difference in outcomes near the boundary.
+
+##### Intuition
+
+Regression discontinuities approximate randomized experiments
+as long as no substantial differences between people just on one side
+
+##### Example
+
+Policy decisions based on income or time
+—exogenous shocks—
+are all common sources of regression discontinuities.
+
+##### Keep in mind
+
+Only estimates treatment effect at the boundary.
+Effect may vary elsewhere.
+
+### Refutations
+
+Causal inference is only possible with assumptions.
+Causal only comes from assumptions that lead to identification.
+That data is used for estimation.
+How to verify them.
+
+#### Step 1: Making explicit the difference between identification and estimation
+
+![Refutation step 1](images/2_methods_for_causal_inference/refutation_step1.png)
+
+#### Step 2: Explicity representing your identifying and estimating assumptions
+
+**Identifying assumption**
+all arrows missing in the causal graphical model.
+No other common cause exists.
+This is untestable in general.
+
+**Estimating assumption**
+overlap between treated and untreated population.
+Can be solved by collecting more data.
+
+#### Step 3: refute your assumptions, and analyze your estimate's sensitivity to violations
+
+**Identifying assumption**
+
+What happens when another common cause exists?
+What happens when treatment is placebo?
+
+#### DoWhy
+
+**DoWhy** focuses attention on the assumptions required for causal inference.
+
+Provides estimation methods
+such as matching and IV
+so you can focus on the identifying assumptions
+
+Models assumptions explicitly using causal graphical model
+Provides an easy way to test them
+or analyze sensitivity to violations
+
+Unifies all methods to yield four verbs:
+
+- Model
+- Identify
+- Estimate
+- Refute
+
+Python example of DoWhy.
+
+![DoWhy example](images/2_methods_for_causal_inference/dowhy_example.png)
+
+#### Refutation checks
+
+##### Add random variables to your model
+
+Can add randomly drawn covariates into data.
+Rerun analysis.
+Do causal estimates change?
+They should not.
+
+##### Replace treatment by a placebo (A/A test)
+
+Randomize or permute the treatment.
+Rerun analysis.
+Does the causal estimate change?
+It should become 0.
+
+##### Divide data into subsets (cross-validation)
+
+Create subsets of your data.
+Rerun analysis.
+Does the causal estimate vary across subsets?
+It should not significantly.
+
+##### Test balance of covariates
+
+Many methods depend on balancing of covariates:
+
+- Matching
+- Stratification
+- Weighting
+- Regression discontinuity
+
+##### Refutation not possible
+
+Sensitivity analysis to violation of assumptions.
+
+**How sensitive is your estimate to minor violations of assumptions?**
+
+Use simulation to add effect of unknown confounders.
+
+Domain knowledge helps to guide reasonable value of simulation.
+
+Make comparisons to other known estimates.
+
+#### Example
+
+**Does smoking cause lung cancer?**
+
+![Smoking graph](images/2_methods_for_causal_inference/smoking_graph.png)
+
+Follow four steps:
+
+1. Model
+2. Identify
+3. Estimate
+4. Refute
+
+_Refute is most important._
+
+Aim for simplicity.
+Try at least two methods with different assumptions.
+Higher confidence in estimate if both methods agree.
+

@@ -1,6 +1,6 @@
 # Causal modeling
 
-My notes, examples, snippets and references on causal modeling.
+My notes, examples, snippets, and references on causal modeling.
 
 Good references are
 

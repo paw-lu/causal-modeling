@@ -584,7 +584,7 @@ Estimates sensitive to violation of exclusion assumption.
 
 Prior setup can be generalized as search for an **instrumental variable**.
 
-![Instrumental variable example](/images/2_methods_for_causal_inference/instrumental_var_example.png)
+![Instrumental variable example](images/2_methods_for_causal_inference/instrumental_var_example.png)
 
 ![Instrumental variable graph](images/2_methods_for_causal_inference/instrumental_var_graph.png)
 
